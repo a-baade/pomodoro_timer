@@ -1,0 +1,97 @@
+html {
+  background-color: #f05b56;
+  transition: background-color 0.5s ease-in-out;
+}
+body {
+  font-family: "ArialRounded", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  width: 450px;
+  height: 200px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  min-height: 100%;
+}
+
+#closeButton {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 1000;
+}
+#closeButton:hover {
+  transition: color 0.2s ease-in-out;
+  color: lightgray;
+}
+
+main#main {
+  background-color: #f05b56;
+  transition: background-color 0.5s ease-in-out;
+
+  color: white;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 10px;
+}
+
+section#time-section {
+  justify-content: center;
+  padding: 20px 0px 30px;
+  text-align: center;
+}
+
+section#time-section h1 {
+  font-size: 7em;
+  padding: 0;
+  margin: 10px;
+}
+section#time-section div {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+section#time-section div button {
+  background: transparent;
+  font-weight: bold;
+  font-size: 0.9em;
+  padding: 0.5rem;
+  color: white;
+  cursor: pointer;
+  margin: 1em;
+  border: none;
+  background: none;
+  transition: all 0.3s ease;
+}
+
+section#time-section div button:active,
+section#time-section div button:focus {
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+section#time-section div button.pressed {
+  background-color: rgba(46, 46, 46, 0.3);
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: all 0.2s ease-in-out;
+}
+section#time-section div button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+h2#startButton {
+  background: white;
+  color: rgb(240, 91, 86);
+  transition: color 0.5s ease-in-out;
+
+  padding: 0.5em 0.8em 0.5em 0.8em;
+  margin: 0 7vw 0 7vw;
+  cursor: pointer;
+}
