@@ -128,6 +128,13 @@ function handleCycle() {
   updateBadge(minutes, seconds, BadgeColor[currentState]);
 }
 
+function setTimerType(timerType) {
+  currentState = timerType;
+  setTimerDuration(timerType);
+  resetTimer();
+  startCountdown();
+}
+
 function setTimerDuration(timerType) {
   const duration = TimerDuration[timerType];
   minutes = duration.minutes;
