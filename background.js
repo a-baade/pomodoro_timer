@@ -16,7 +16,7 @@ const TimerType = {
 
 const TimerDuration = {
   [TimerType.POMODORO]: {minutes: 25, seconds: 0},
-  [TimerType.SHORT_BREAK]: {minutes: 0, seconds: 5},
+  [TimerType.SHORT_BREAK]: {minutes: 5, seconds: 0},
   [TimerType.LONG_BREAK]: {minutes: 15, seconds: 0},
 };
 
