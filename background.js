@@ -6,6 +6,7 @@ let cycleCount = 0;
 let cycleCountTracker = 0;
 let currentState = "pomodoro";
 let timerPaused = false;
+let timerWindowId = null;
 
 const TimerType = {
   POMODORO: "pomodoro",
@@ -15,9 +16,27 @@ const TimerType = {
 
 const TimerDuration = {
   [TimerType.POMODORO]: {minutes: 25, seconds: 0},
-  [TimerType.SHORT_BREAK]: {minutes: 5, seconds: 0},
+  [TimerType.SHORT_BREAK]: {minutes: 0, seconds: 5},
   [TimerType.LONG_BREAK]: {minutes: 15, seconds: 0},
 };
+
+function openTimerWindow() {
+  if (timerWindowId === null) {
+    chrome.windows.create(
+      {
+        url: "popup.html",
+        type: "popup",
+        width: 500,
+        height: 350,
+      },
+      (window) => {
+        timerWindowId = window.id;
+      }
+    );
+  } else {
+    chrome.windows.update(timerWindowId, {focused: true});
+  }
+}
 
 function handleManualStart(type) {
   if (isRunning) {
@@ -65,7 +84,7 @@ function updateBadge(minutes, seconds, color) {
 function startCountdown() {
   if (intervalId) clearInterval(intervalId);
 
-  let popupOpened = false;
+  let windowOpened = false;
 
   intervalId = setInterval(() => {
     if (minutes > 0 || seconds > 0) {
@@ -77,9 +96,9 @@ function startCountdown() {
       }
 
       const totalSeconds = minutes * 60 + seconds;
-      if (totalSeconds <= 3 && !popupOpened) {
-        chrome.action.openPopup();
-        popupOpened = true;
+      if (totalSeconds <= 3 && !windowOpened) {
+        openTimerWindow();
+        windowOpened = true;
       }
     } else {
       clearInterval(intervalId);
@@ -154,6 +173,16 @@ function updatePopup() {
     },
   });
 }
+
+chrome.action.onClicked.addListener((tab) => {
+  openTimerWindow();
+});
+
+chrome.windows.onRemoved.addListener((windowId) => {
+  if (windowId === timerWindowId) {
+    timerWindowId = null;
+  }
+});
 
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   if (namespace === "settings" && changes["timer"]) {

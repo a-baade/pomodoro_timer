@@ -13,9 +13,7 @@
     "notifications",
     "offscreen"
   ],
-  "action": {
-    "default_popup": "popup.html"
-  },
+  "action": {},
   "web_accessible_resources": [
     {
       "resources": ["alarm_sound.mp3"],
