@@ -38,6 +38,21 @@ function openTimerWindow() {
   }
 }
 
+function setTimerType(timerType) {
+  currentState = timerType;
+  setTimerDuration(timerType);
+  resetTimer();
+  startCountdown();
+  updateBadge(minutes, seconds, TimerColor[timerType]);
+}
+
+function setTimerTypeManual(timerType) {
+  currentState = timerType;
+  setTimerDuration(timerType);
+  resetTimer();
+  startCountdown();
+}
+
 function handleManualStart(type) {
   if (isRunning) {
     return;
@@ -45,26 +60,18 @@ function handleManualStart(type) {
   switch (type) {
     case TimerType.POMODORO:
       pauseCountdown();
-      setTimerType(TimerType.POMODORO);
+      setTimerTypeManual(TimerType.POMODORO);
       break;
     case TimerType.SHORT_BREAK:
       pauseCountdown();
-      setTimerType(TimerType.SHORT_BREAK);
+      setTimerTypeManual(TimerType.SHORT_BREAK);
       break;
     case TimerType.LONG_BREAK:
       pauseCountdown();
-      setTimerType(TimerType.LONG_BREAK);
+      setTimerTypeManual(TimerType.LONG_BREAK);
       break;
   }
   resetTimer();
-}
-
-function setTimerType(timerType) {
-  currentState = timerType;
-  setTimerDuration(timerType);
-  resetTimer();
-  startCountdown();
-  updateBadge(minutes, seconds, TimerColor[timerType]);
 }
 
 const BadgeColor = {
@@ -96,7 +103,7 @@ function startCountdown() {
       }
 
       const totalSeconds = minutes * 60 + seconds;
-      if (totalSeconds <= 3 && !windowOpened) {
+      if (totalSeconds <= 2 && !windowOpened) {
         openTimerWindow();
         windowOpened = true;
       }
@@ -147,11 +154,18 @@ function handleCycle() {
   updateBadge(minutes, seconds, BadgeColor[currentState]);
 }
 
-function setTimerType(timerType) {
-  currentState = timerType;
-  setTimerDuration(timerType);
-  resetTimer();
-  startCountdown();
+function handleSkip() {
+  clearInterval(intervalId);
+  isRunning = false;
+  cycleCount++;
+  cycleCountTracker++;
+  if (cycleCount === 6) {
+    cycleCount = 0;
+  }
+  setTimeout(() => {
+    handleCycle();
+    startCountdown();
+  }, 1000);
 }
 
 function setTimerDuration(timerType) {
@@ -204,10 +218,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       break;
     case "setTimer":
       setTimerType(request.timerType);
-
       break;
     case "handleManualStart":
       handleManualStart(request.type);
+      break;
+    case "skip":
+      handleSkip();
       break;
     case "openPopup":
       chrome.tabs.create({url: "popup.html"});

@@ -4,23 +4,36 @@
     <meta charset="UTF-8" />
     <title>Pomodoro Timer</title>
     <link href="./style.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
     <style></style>
   </head>
   <body>
-   <main id="main">
+    <main id="main">
       <section id="time-section">
         <div>
-          <button id="pomodoroButton">Pomodoro</p>
-          <button id="shortBreakButton">Short Break</p>
-          <button id="longBreakButton">Long Break</p>
+          <button id="pomodoroButton">Pomodoro</button>
+          <button id="shortBreakButton">Short Break</button>
+          <button id="longBreakButton">Long Break</button>
         </div>
         <h1 id="stopwatch">00:00</h1>
-        <h2 id="startButton">START</h2>
+        <div id="button-container">
+          <h2 id="startButton">START</h2>
+          <p id="skipButton" href="">
+            <span
+              id="skipButtonIcon"
+              class="fa-solid fa-forward"
+              style="color: #ffffff"
+            ></span>
+          </p>
+        </div>
         <p id="cycleCountDisplay">#0</p>
       </section>
       <br /><br />
     </main>
-    <script src="popup.js">
-    </script>
+    <script src="popup.js"></script>
   </body>
 </html>

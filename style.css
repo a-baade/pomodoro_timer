@@ -86,12 +86,56 @@ section#time-section div button.disabled {
   cursor: not-allowed;
 }
 
+#button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 20px;
+}
+
+#skipButton {
+  display: none; /* Initially hide the skip button */
+  position: absolute;
+  right: -30px;
+  top: 10%;
+  transform: translateY(-50%);
+  color: white;
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+#skipButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+#skipButtonIcon {
+  width: 100px; /* Adjust as needed */
+  height: 30px; /* Adjust as needed */
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+  margin-right: 10px;
+}
 h2#startButton {
   background: white;
   color: rgb(240, 91, 86);
   transition: color 0.5s ease-in-out;
-
+  width: 280px;
+  font-size: 16px;
   padding: 0.5em 0.8em 0.5em 0.8em;
-  margin: 0 7vw 0 7vw;
   cursor: pointer;
+  margin: 0;
+  position: relative;
+}
+
+#cycleCountDisplay {
+  font-weight: bold;
+  font-size: 15px;
 }

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const shortBreakButton = document.getElementById("shortBreakButton");
   const longBreakButton = document.getElementById("longBreakButton");
   const pomodoroButton = document.getElementById("pomodoroButton");
+  const skipButton = document.getElementById("skipButton");
 
   let backgroundColors = {
     pomodoro: "#f05b56",
@@ -67,6 +68,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!timer.isRunning && timer.minutes === 0 && timer.seconds === 0) {
       stopwatch.textContent += " PAUSED";
     }
+    setTimeout(() => {
+      if (timer.isRunning) {
+        skipButton.style.display = "inline-block";
+        skipButton.disabled = false;
+      } else {
+        skipButton.style.display = "none";
+        skipButton.disabled = true;
+      }
+    }, 500);
 
     startButton.textContent = timer.isRunning ? "Pause" : "Start";
     updateCycleCountDisplay(timer.cycleCountTracker);
@@ -137,6 +147,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     updateBackground(backgroundColors.longBreak);
     setButtonState(longBreakButton);
+  });
+
+  skipButton.addEventListener("click", function () {
+    chrome.runtime.sendMessage({action: "skip"});
   });
 
   document.body.addEventListener("keydown", function (event) {
